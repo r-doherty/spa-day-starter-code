@@ -24,7 +24,7 @@ public class UserController {
         if(errors.hasErrors()) {
             return "user/add";
         }
-        if (newUser.getPassword().equals(newUser.getVerify())) {
+        if (newUser.getPassword().equals(newUser.getVerifyPassword())) {
            return "user/index";
         }
         else {

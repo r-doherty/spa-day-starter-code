@@ -1,9 +1,6 @@
 package org.launchcode.spaday.models;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 public class User {
 
@@ -18,19 +15,19 @@ public class User {
     @NotEmpty(message="Password field cannot be empty")
     private String password;
 
-    @NotEmpty(message="Verify field cannot be empty")
-    private String verify;
+    @NotNull(message="Passwords do not match")
+    private String verifyPassword;
 
     public User() {
 
     }
 
-    public User(String username, String email, String password, String verify) {
+    public User(String username, String email, String password, String verifyPassword) {
         this();
         this.username = username;
         this.email = email;
         this.password = password;
-        this.verify = verify;
+        this.verifyPassword = verifyPassword;
     }
 
     public String getUsername() {
@@ -55,13 +52,23 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+        checkPassword();
     }
 
-    public String getVerify() {
-        return verify;
+    public String getVerifyPassword() {
+        return verifyPassword;
     }
 
-    public void setVerify(String verify) {
-        this.verify = verify;
+    public void setVerifyPassword(String verifyPassword) {
+        this.verifyPassword = verifyPassword;
+        checkPassword();
+    }
+
+    private void checkPassword()
+    {
+        if(password != null && verifyPassword != null && !password.equals(verifyPassword))
+        {
+            setVerifyPassword(null);
+        }
     }
 }
